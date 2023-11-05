@@ -2,17 +2,17 @@
 #include <cmath>
 #include <iostream>
 #include <bits/stdc++.h> 
-#pragma once;
+#pragma once
 
 using namespace std;
 
 // Function prototypes
 
 //Sorting Functions
-bool quickSort(vector<int>& arr, const unsigned int n);
-bool insertionSort(vector<int>& arr, const unsigned int n);
-bool mergeSort(vector<int>& arr, const unsigned int n);
-bool quickInsertionSort(vector<int>& arr, const unsigned int n, const unsigned int k);
+void quickSort(vector<int>& arr, const unsigned int left, const unsigned int right);
+void insertionSort(vector<int>& arr, const unsigned int low, const unsigned int n);
+void mergeSort(vector<int>& arr, const unsigned int n);
+void quickInsertionSort(vector<int>& arr, const unsigned int n, const unsigned int k);
 
 void print(vector<int>& arr, const unsigned int n);
 void sort(vector<int>& arr, const unsigned int n, const unsigned int k);
