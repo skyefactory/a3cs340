@@ -1,100 +1,22 @@
 #include "../sort.h"
 //path: src/sort.cpp
 
-// Function definitions
 
-//Required Functions
-void sort(vector<int>& arr, const unsigned int n, const unsigned int k)
+// Sorting Functions
+void insertionSort(vector<int>& arr, const unsigned int left, const unsigned int right)
 {
-    time_t start,end;
-    vector<int> arr2 = arr;
-
-    cout<<"Initial Array: ";
-    print(arr, n);
-    cout<<endl;
-
-    cout<<"Quick Sort: ";
-    time(&start);
-    quickSort(arr, n);
-    time(&end);
-    cout<<"Sorted Array: ";
-    print(arr, n);
-    cout<<"Time taken by Quick Sort: "<<fixed<<double(end - start)<<setprecision(5);cout<<" sec"<<endl;
-    arr = arr2;
-
-    cout<<"Insertion Sort: ";
-    time(&start);
-    insertionSort(arr, n);
-    time(&end);
-    cout<<"Sorted Array: ";
-    print(arr, n);
-    cout<<"Time taken by Insertion Sort: "<<fixed<<double(end - start)<<setprecision(5);cout<<" sec"<<endl;
-    arr = arr2;
-
-    cout<<"Merge Sort: ";
-    time(&start);
-    mergeSort(arr, n);
-    time(&end);
-    print(arr, n);
-    cout<<"Time taken by Merge Sort: "<<fixed<<double(end - start)<<setprecision(5);cout<<" sec"<<endl;
-    arr = arr2;
-
-    cout<<"Quick Insertion Sort: ";
-    time(&start);
-    quickInsertionSort(arr, n, k);
-    time(&end);
-    print(arr, n);
-    cout<<"Time taken by Quick Insertion Sort: "<<fixed<<double(end - start)<<setprecision(5);cout<<" sec"<<endl;
-    arr = arr2;
-}
-int findBest(vector<int>& arr, const unsigned int n, const unsigned int k)
-{
-    return -1;
-}
-
-//Sorters
-
-//Worst Case O(n^2), Average Case O(nlogn)
-void quickSort(vector<int>& arr, const unsigned int left, const unsigned int right)
-{
-    int i = left, j = right, piv = arr[(left+right)/2];
-
-    while (i <= j){
-        while (arr[i] < piv)
-            i++;
-        while (arr[j] > piv)
-            j--;
-        if(i <= j){
-            int t = arr[i];
-            arr[i] = arr[j];
-            arr[j] = t;
-            i++;
-            j--;
-        }
-
-    }
-    if (left < j)
-        quickSort(arr, left, j);
-    if (i < right)
-        quickSort(arr, i, right);
-}
-
-//Worst Case O(n^2)
-void insertionSort(vector<int>& arr, const unsigned int n ,const unsigned int low = 1)
-{
-    if(n == 0)
-    for(int i = low+1 ; i < n+1; i++){
+    for(int i = left+1 ; i <= right; i++){
         int v = arr[i];
-        int j = i;
-        while (j >low and arr[j-] > v){
-            arr[j] = arr[j-1];
+        int j = i-1;
+        while (j >= 0 and arr[j] > v){
+            arr[j+1] = arr[j];
             j--;
         }
-        arr[j] = v;
+        arr[++j] = v;
     }
 }
-//Worst Case O(nlogn)
 void mergeSort(vector<int>& arr, int l, int r)
+
 {
     int m;
     if(l < r){
@@ -105,47 +27,34 @@ void mergeSort(vector<int>& arr, int l, int r)
     }
     
 }
+void quickSort(vector<int>& arr, const unsigned int left, const unsigned int right)
+{
+    int p;
+    if(left<right)
+    {
+        p = findPiv(arr,left,right);
+        quickSort(arr,left,p-1);
+        quickSort(arr,p+1,right);
+    }
+}
 void quickInsertionSort(vector<int>& arr, const unsigned int left, const unsigned int right, const unsigned int k)
 {
-    int i = left, j = right, piv = arr[(left+right)/2];
-
-    while (i <= j){
-        if((i-j) + 1 <= k){
-            insertionSort(arr, left, right);
-            break;
+    int p;
+    if((left-right)>k)
+    {    
+        if(left<right)
+        {
+            p = findPiv(arr,left,right);
+            quickSort(arr,left,p-1);
+            quickSort(arr,p+1,right);
         }
-        while (arr[i] < piv)
-            i++;
-        while (arr[j] > piv)
-            j--;
-        if(i <= j){
-            int t = arr[i];
-            arr[i] = arr[j];
-            arr[j] = t;
-            i++;
-            j--;
-        }
-
     }
-    if (left < j)
-        quickInsertionSort(arr, left, j);
-    if (i < right)
-        quickInsertionSort(arr, i, right);
+    else
+    {
+        insertionSort(arr,left,right);
+    }
 }
 
-// Finders
-int findBestCaseInsertion(vector<int>& arr, const unsigned int n)
-{
-    return -1;
-}
-int findBestCaseQuickInsertion(vector<int>& arr, const unsigned int n, const unsigned int k)
-{
-    return -1;
-}
-int findBestCaseQuickSort(vector<int>& arr, const unsigned int n)
-{
-    return -1;
-}
 
 
 // Helpers
@@ -154,12 +63,11 @@ void print(vector<int>& arr, const unsigned int n)
     cout<<"[ ";
     for(int i = 0 ; i < n; i++){
         if(i == n-1){
-            cout<<arr[i];
+            cout<<arr[i]<<' '<<']'<<endl;
         }
         else{
             cout<<arr[i]<<", ";
         }
-        cout<<arr[i]<<" ";
     }
     cout<<endl;
 }
@@ -201,3 +109,25 @@ void merge(vector<int>& arr, int left, int middle, int right)
         k++;
     }
 }
+int findPiv(vector<int>& arr,int left, int right)
+{
+    int pivot = arr[(left+right/2)];
+    int i = (left-1);
+    for(int j = left; j <= right-1; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    int temp = arr[i+1];
+    arr[i+1] = arr[right];
+    arr[right] = temp;
+    return (i+1);
+}
+
+
+
