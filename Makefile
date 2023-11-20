@@ -4,7 +4,7 @@ ODIR = obj
 CC = g++
 CLFLAGS=-I$(IDIR)
 
-all: create assign2dfo301 clean
+all: create assign3dfo301 clean
 
 _OBJ = main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
