@@ -38,6 +38,7 @@ int main(){
     cout<<"Time taken by quick insertion sort is : "<< measureTimeQuickInsert(arr,n,k)<< " microseconds" << endl;
     cout<<"Sorted array : "; print(arr,n);
     cout<<endl;
+    arr=initial;
     cout<<"--------------------------------------------------------------------------------"<<endl;
     vector<int> best = findBestCaseInsertion();
     cout<<"The best case for insertion sort is : "<<"N:"<<best[0]<<"K"<<best[1]<<endl;

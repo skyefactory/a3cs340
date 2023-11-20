@@ -38,73 +38,69 @@ double measureTimeMerge(vector<int>& arr, const unsigned int n)
 vector<int> findBestCaseInsertion()
 {
     //Insertion sort would typically outperform quicksort at lower values of n.
-    int n = 5;
-    int k = 0;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++)
-        {
-            arr[i] = rand()%1000;
-        }
-    double insertionTime = measureTimeInsertion(arr,n), quickTime = measureTimeQuick(arr,n), quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-    while(insertionTime >= quickTime && insertionTime >= quickInsertionTime)
+    double insertionTime , quickTime , quickInsertionTime;
+    int n,k=1;
+    for(n = 5; n < 100000; n++)
     {
-        insertionTime = measureTimeInsertion(arr,n);
-        quickTime = measureTimeQuick(arr,n);
-        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-        n++; k++;
+        k++; 
         vector<int> arr(n);
         for(int i=0;i<n;i++)
         {
             arr[i] = rand()%1000;
         }
+        insertionTime = measureTimeInsertion(arr,n);
+        quickTime = measureTimeQuick(arr,n);
+        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
+        if(insertionTime < quickInsertionTime && insertionTime < quickTime)
+        {
+            return {n, k};
+        }
+
     }
-    return {n, k};
 }
 vector<int> findBestCaseQuickInsertion()
 {
-    int n = 5;
-    int k = 1;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++)
-        {
-            arr[i] = rand()%1000;
-        }
-    double insertionTime = measureTimeInsertion(arr,n), quickTime = measureTimeQuick(arr,n), quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-    while(quickInsertionTime >= insertionTime && quickInsertionTime >= quickTime)
+    double insertionTime , quickTime , quickInsertionTime;
+    int n,k=5;
+    for(n = 5; n < 100000; n*=10)
     {
-        insertionTime = measureTimeInsertion(arr,n);
-        quickTime = measureTimeQuick(arr,n);
-        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-        n++; k++;
+        k*=2;
         vector<int> arr(n);
         for(int i=0;i<n;i++)
         {
             arr[i] = rand()%1000;
         }
+        insertionTime = measureTimeInsertion(arr,n);
+        quickTime = measureTimeQuick(arr,n);
+        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
+        if(quickInsertionTime < insertionTime && quickInsertionTime < quickTime)
+        {
+            return {n, k};
+        }
+
     }
     return {n, k};
 }
 vector<int> findBestCaseQuickSort()
 {
-    int n = 5;
-    int k = 0;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++)
-        {
-            arr[i] = rand()%1000;
-        }
-    double insertionTime = measureTimeInsertion(arr,n), quickTime = measureTimeQuick(arr,n), quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-    while(quickTime >= insertionTime && quickTime >= quickInsertionTime)
+    double insertionTime , quickTime , quickInsertionTime;
+    int n,k=1;
+    for(n = 5; n < 100000; n*=10)
     {
-        insertionTime = measureTimeInsertion(arr,n);
-        quickTime = measureTimeQuick(arr,n);
-        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
-        n++; k++;
+        k*=5;
         vector<int> arr(n);
         for(int i=0;i<n;i++)
         {
             arr[i] = rand()%1000;
         }
+        insertionTime = measureTimeInsertion(arr,n);
+        quickTime = measureTimeQuick(arr,n);
+        quickInsertionTime = measureTimeQuickInsert(arr,n,k);
+        if(quickTime < insertionTime && quickTime < quickInsertionTime)
+        {
+            return {n, k};
+        }
+
     }
     return {n, k};
 } 
