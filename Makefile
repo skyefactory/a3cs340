@@ -5,7 +5,7 @@ CC = g++
 CLFLAGS=-I$(IDIR)
 
 all: create assign3dfo301 clean
-
+DEPS = sort.h time.h
 _OBJ = main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
